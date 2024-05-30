@@ -1,9 +1,18 @@
-### Main script of the project
-
 ###My species: Vulpes vulpes (sp1) & Microtus arvalis (sp2)
-###Analyse relation prey-predator
+###Analyse relation proie-prédateur
+########################################################################################################
+#Library les plus couramment utiliser dans le projet
 
-###Maps
+library(rgbif) 
+library(rnaturalearth)
+library(ggplot2)
+library(rinat)
+library(raster)
+library(sf)
+library(elevatr)
+
+###Codes pour arriver à la matrice full (matrix_full_eco_elev_clim_sat) avec toutes les données qui nous intéressent 
+###pour les plots et analyse statistique
 
 source('src/import_data.R')
 
@@ -11,17 +20,34 @@ source('src/ecosystems.R')
 
 source('src/elevation.R')
 
-source('src/world_clim_data.R')
-
-source('src/3d_map_points.R')
+source('src/clim_data.R')
 
 source('src/NDVI.R')
 
-###GGPLOT   
+###Map 
 
-source('src/ggplot.R')
+source('src/3d_map_points.R')
 
 ###Statistiques
+library(ggcorrplot)
+library(ggfortify)
+library(corrplot)
+library(pheatmap)
+library(randomcoloR)
+library(emmeans)
+library(plotly)
+library(dplyr)
+library(ggridges)
+library(fmsb)
 
-source('src/kernel_density_map.R') #pour l'instant ne fonctionne pas
+source('src/Heatmap.R')
 
+source('src/ML.R')
+
+source('src/boxplot.R')
+
+source('src/Aggregate.R')
+
+source('src/multi_plot.R')
+
+source('src/ggplot.R')
