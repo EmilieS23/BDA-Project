@@ -15,14 +15,14 @@ autoplot(pca_res)
 ##########################################################################################
 ##########################################################################################
 
-autoplot(pca_res, data = df_discrete, colour = 'species',
+autoplot(pca_res, data = df_discrete, colour = 'sp',
          loadings = TRUE, loadings.colour = 'blue',
          loadings.label = TRUE, loadings.label.size = 3)
 
 ##########################################################################################
 ########################################################################################## # nolint
 
-pca_plot <- autoplot(pca_res, data = df_discrete, colour = 'species',
+pca_plot <- autoplot(pca_res, data = df_discrete, colour = 'sp',
                      loadings = TRUE, loadings.colour = 'black',
                      loadings.label = TRUE, loadings.label.size = 3)
 
@@ -32,7 +32,7 @@ pca_plot + theme_classic()
 ##########################################################################################
 
 
-autoplot(pca_res, data = df_discrete, colour = 'species',
+autoplot(pca_res, data = df_discrete, colour = 'sp',
          loadings = TRUE, loadings.colour = 'black',
          loadings.label = TRUE, loadings.label.size = 3, frame = TRUE) + theme_classic()
 
@@ -40,7 +40,7 @@ autoplot(pca_res, data = df_discrete, colour = 'species',
 ##########################################################################################
 ##########################################################################################
 
-autoplot(pca_res, data = df_discrete, colour = 'species',
+autoplot(pca_res, data = df_discrete, colour = 'sp',
          loadings = TRUE, loadings.colour = 'black',
          loadings.label = TRUE, loadings.label.size = 3, frame = TRUE, frame.type = 'norm') + theme_classic()
 
@@ -60,7 +60,7 @@ D3_data_dist <- cmdscale(dist_matt, k = 3)
 D3_data_dist <- data.frame(D3_data_dist)
 
 
-cols <- df_discrete$species
+cols <- df_discrete$sp
 
 PCOA <- ggplot(D3_data_dist, aes(x = X1, y = X2, color = cols)) +
   geom_point() + ggtitle("my project") +
@@ -107,7 +107,7 @@ scale.loads <- 5
 library(plotly)
 p <- plot_ly() %>%
   add_trace(x=x, y=y, z=z,
-            type="scatter3d", mode="markers", color = df_discrete$species)
+            type="scatter3d", mode="markers", color = df_discrete$sp)
 
 for (k in 1:nrow(loads)) {
    x <- c(0, loads[k,1])*scale.loads
