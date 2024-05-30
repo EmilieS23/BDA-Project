@@ -1,7 +1,3 @@
-
-################################################################################
-################################################################################
-
 library(sf)
 library(elevatr)
 library(raster)
@@ -12,13 +8,10 @@ Switzerland <- ne_countries(scale = "medium", returnclass = "sf",country ="Switz
 elevation_switzerland <- get_elev_raster(Switzerland, z = 8)
 plot(elevation_switzerland)
 
-
-
 ## crop and mask
 r2 <- crop(elevation_switzerland, extent(Switzerland))
 elevation_switzerland <- mask(r2, Switzerland)
 plot(elevation_switzerland)
-
 
 library(rayshader)
 ###### 3d plot v1 
@@ -76,17 +69,16 @@ plot_3d(elmat, zscale = 100, fov = 0, theta = 135, zoom = 0.75,
         phi = 45, windowsize = c(1500, 800))
 
 
+mycolor <- rep("black",nrow(matrix_full_eco_elev_clim_sat))
+mycolor[matrix_full_eco_elev_clim_sat$sp == "Vulpes vulpes"]<-"orange"
+mycolor[matrix_full_eco_elev_clim_sat$sp == "Microtus arvalis"]<-"grey"
+
 # Render points on the 3D elevation map
 render_points(
   extent = extent(Switzerland), size = 10,
   lat = gbif_coord$latitude, long = gbif_coord$longitude,
-  altitude = elevation_points + 100, zscale = 150, color = "darkred"
+  altitude = elevation_points + 100, zscale = 150, color = "mycolor"
 )
-
-
-
-################################################################################
-################################################################################
 
 library(sf)
 library(elevatr)
@@ -145,10 +137,6 @@ render_points(
   lat = gbif_coord$latitude, long = gbif_coord$longitude,
   altitude = elevation_points + 100, zscale = 150, color = "black"
 )
-
-
-
-
 
 elmat <- raster_to_matrix(elevation_switzerland)
 
