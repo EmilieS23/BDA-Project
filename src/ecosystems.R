@@ -1,13 +1,8 @@
-# Load the raster package
-library(raster)
-library(ggplot2)
-
-# Set the file path to your GeoTIFF
+#Chemin du fichier Worldecosystem
 file_path <- "C:/Users/schra/Bureau/Université/Master Biologie/BDA/Projet/data/WorldEcosystem.tif" 
 
 # Read the raster GeoTIFF
 ecosystem_raster <- raster(file_path)
-
 
 Switzerland <- ne_countries(scale = "medium", returnclass = "sf",country ="Switzerland" )
 ## crop and mask
@@ -23,22 +18,13 @@ plot(spatial_points,add=T,pch=16,cex=2) #CA NE MARCHE PAS
 # Extract values
 eco_values <- raster::extract(ecosystem_switzerland, spatial_points)
 
-# Print the extracted values
-#View(eco_values)
-
-
-
-######### metadata: 
-
-
-
 matrix_full$eco_values <- eco_values
 
 metadat_eco <- read.delim("C:/Users/schra/Bureau/Université/Master Biologie/BDA/Projet/data/WorldEcosystem.metadata.tsv")
 
 # combinaison des eco data avec ma prédécente matrix_full pour avoir une nouvelle matrix_full plus complète !
 matrix_full_eco <- merge(matrix_full, metadat_eco, by.x = "eco_values", by.y = "Value", all.x = TRUE)
-
+matrix_full_eco <- matrix_full_eco[!is.na(matrix_full_eco$eco_values),]
 
 p1 <- ggplot(matrix_full_eco, aes(x = Climate_Re, fill = sp)) +
     geom_bar(position = "dodge") +
@@ -47,3 +33,8 @@ p1 <- ggplot(matrix_full_eco, aes(x = Climate_Re, fill = sp)) +
 
 
 print(p1)
+
+#on retrouve 3 climats pricipaux - cool temperata moist, polar moist et warm temperate moist
+#c'est des climats qui peuvent effectivement se retrouver en Suisse
+#le polar moist pourrait correpondre au climat qu'on retrouve en altitude (Alpes)
+#Notre histogramme nous montre également la présence d'une sous-espèce de renard...
