@@ -1,7 +1,3 @@
-library(sf)
-library(elevatr)
-library(raster)
-
 sf_use_s2(FALSE)
 
 Switzerland <- ne_countries(scale = "medium", returnclass = "sf",country ="Switzerland" )
@@ -68,16 +64,11 @@ elmat %>%
 plot_3d(elmat, zscale = 100, fov = 0, theta = 135, zoom = 0.75, 
         phi = 45, windowsize = c(1500, 800))
 
-
-mycolor <- rep("black",nrow(matrix_full_eco_elev_clim_sat))
-mycolor[matrix_full_eco_elev_clim_sat$sp == "Vulpes vulpes"]<-"orange"
-mycolor[matrix_full_eco_elev_clim_sat$sp == "Microtus arvalis"]<-"grey"
-
 # Render points on the 3D elevation map
 render_points(
   extent = extent(Switzerland), size = 10,
   lat = gbif_coord$latitude, long = gbif_coord$longitude,
-  altitude = elevation_points + 100, zscale = 150, color = "mycolor"
+  altitude = elevation_points + 100, zscale = 150, color = "black"
 )
 
 library(sf)
