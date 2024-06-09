@@ -1,4 +1,3 @@
-# Factor Analysis
 data_stat <- matrix_full_eco_elev_clim_sat
 
 #Température et landcover
@@ -11,7 +10,6 @@ P_fact <- P_fact + geom_boxplot(varwidth = TRUE, outlier.shape = NA) +  # Change
 
 ploty <- ggplotly(P_fact)
 print(ploty)
-# Fit a linear model with landcover as a factor
 linear_modelPfact <- lm(temp ~ Landcover, data = data_stat)
 anova(linear_modelPfact)
 
@@ -28,7 +26,6 @@ P_fact2 <- P_fact2 + geom_boxplot(varwidth = TRUE, outlier.shape = NA) +  # Chan
 
 ploty2 <- ggplotly(P_fact2)
 print(ploty2)
-# Fit a linear model with landcover as a factor
 linear_modelPfact2 <- lm(temp ~ Landcover, data = data_stat)
 anova(linear_modelPfact2)
 
