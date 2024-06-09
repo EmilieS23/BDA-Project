@@ -1,3 +1,5 @@
+data_stat <- matrix_full_eco_elev_clim_sat
+
 #Aggrégation des data
 aggregated_data <- aggregate(
   cbind(elevation, precip, temp, NDVI) ~ W_Ecosystm, 
@@ -42,6 +44,9 @@ e <- ggplot(matrix_full_eco_elev_clim_sat, aes(x = elevation, y = sp, fill = sp)
 print(e)
 
 ##Radarchart
+
+data_stat <- matrix_full_eco_elev_clim_sat
+
 # Agréger les données par W_Ecosystm
 aggregated_data_species <- aggregate(
   cbind(elevation, precip, temp, NDVI) ~ sp, 
@@ -58,8 +63,8 @@ row_id <- c(1,2,aggregated_data_species$sp)
 aggregated_data_species <- rbind(min1,max2,sp1,sp2)
 row.names(aggregated_data_species) <- row_id
 
-spider <- radarchart(aggregated_data_species)
-print(spider)
+radarchart(aggregated_data_species)
+
 
 #le graphe montre une supeposition des espèces, donc vivent dans les mêmes millieux
-#montre bien que le renard est le prédateur du mulot
+#montre bien une superposition de niche, ce à quoi on peut s'attendre si nous avons proir-prédateur
