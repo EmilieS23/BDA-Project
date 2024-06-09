@@ -1,7 +1,4 @@
 library(geodata)
-library(ggplot2)
-library(sp)
-library(raster)
 
 spatial_points <- SpatialPoints(coords = matrix_full_eco_elev[, c("longitudesp","latitudesp")], proj4string = CRS("+proj=longlat +datum=WGS84"))
 
@@ -12,6 +9,7 @@ sw_clim_br <- brick(sw_clim)
 matrix_clim = NULL
 vec_colnames = NULL
 
+#boucle pour pouvoir faire tous les mois dee l'années
 for (i in 1:12)
 {
   raster_month <- sw_clim_br[[i]]
@@ -28,7 +26,7 @@ temp<- raster::extract(raster_month, spatial_points, method = 'bilinear')
 
 temp <- data.frame(temp)
 
-#Plot density of average temperature data for species occurrences
+#température moyenne avec occurences des espèces
 t <- ggplot(temp, aes(x = temp)) +
   geom_density(color = "red", fill = "orange", adjust = 3) +
   theme_bw()
@@ -57,7 +55,7 @@ precip <- raster::extract(raster_month2, spatial_points, method = 'bilinear')
 
 precip <- data.frame(precip)
 
-# Plot density of precipitation data for species occurrences
+#densité de précipitation
 p <- ggplot(precip, aes(x = precip)) +
   geom_density(color = "darkblue", fill = "blue", adjust = 2) +
   theme_bw()
