@@ -1,21 +1,19 @@
 #Chemin du fichier Worldecosystem
 file_path <- "C:/Users/schra/Bureau/Université/Master Biologie/BDA/Projet/data/WorldEcosystem.tif" 
 
-# Read the raster GeoTIFF
 ecosystem_raster <- raster(file_path)
 
 Switzerland <- ne_countries(scale = "medium", returnclass = "sf",country ="Switzerland" )
-## crop and mask
 r2 <- crop(ecosystem_raster, extent(Switzerland))
 ecosystem_switzerland <- mask(r2, Switzerland)
 plot(ecosystem_switzerland)
 
-# Assuming matrix_full is your data frame with latitude and longitude columns
+# utilisation de la matrix full et prendre les coordonnées
 spatial_points <- SpatialPoints(coords = matrix_full[, c("longitudesp","latitudesp")], proj4string = CRS("+proj=longlat +datum=WGS84"))
 
-plot(spatial_points,add=T,pch=16,cex=2) #CA NE MARCHE PAS
+plot(spatial_points,add=T,pch=16,cex=2)
 
-# Extract values
+#prendre les eco value du raster pour ensuite compléter notre matrix full
 eco_values <- raster::extract(ecosystem_switzerland, spatial_points)
 
 matrix_full$eco_values <- eco_values
