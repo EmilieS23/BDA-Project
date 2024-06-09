@@ -1,14 +1,11 @@
-ggplot(data   = matrix_full_eco_elev_clim_sat,              # sp�cifier les donn�es
-       mapping = aes(x = temp ,    # mapper 'temp' � l'axe des x
-                     y = precip  )) +   # mapper 'precip' � l'axe des y
-  geom_point()                    # tracer les points
+#Température et élévation
+ggplot(data   = matrix_full_eco_elev_clim_sat,
+       mapping = aes(x = temp ,
+                     y = elevation  )) +   
+  geom_point()
+#graphe de base avec juste les points
 
-
-###################################################################
-###################################################################
-### add lines
-
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip)) 
+ P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = elevation)) 
 
  P+geom_point()
  
@@ -16,84 +13,55 @@ ggplot(data   = matrix_full_eco_elev_clim_sat,              # sp�cifier les do
  P + geom_point() +  geom_line() 
  
  P1 <-  P + geom_point() +  geom_line() 
- 
- ###################################################################
- ###################################################################
- ### add labels
+#linges qui relient les points
  
 P2 <-   P1+ geom_point() +  geom_line() +
-labs(title    = "temperature vs. precipitation",
+labs(title    = "temperature vs. elevation",
      subtitle = "data from species niche",
      x        = "temperature in degree C",
      y        = "precipitation in mm ",
      caption  = "bidiversity data mining 2022")
  
- P2
- 
- ###################################################################
- ###################################################################
- ### change theme
- 
- P2 + theme_bw() + theme(
+
+ PF <- P2 + theme_bw() + theme(
    axis.title = element_text(colour = "blue", face = "bold"),
    plot.title = element_text(colour = "blue", face = "bold"),
    plot.subtitle = element_text(colour = "blue", face = "bold"))
- 
- 
- 
- ###################################################################
- ###################################################################
- ###  points and lines types
- 
- 
- P <- ggplot(data = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp, y = precip)) +
+#rajout des légendes, de la couleurs
+
+
+ P <- ggplot(data = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp, y = elevation)) +
    geom_point(shape = 16, size = 3, color = "blue") 
- 
- #size and lines type could be fixed
+
  P + geom_point(shape = 18, size = 3, color = "blue")  +
      geom_line(color = "red", linetype = 3) 
  
- #size  ccould be linked to values 
  
- P + geom_point(shape = 16, size = matrix_full_eco_elev_clim_sat$temp, color = "blue")  +
+ppf <-  P + geom_point(shape = 16, size = matrix_full_eco_elev_clim_sat$temp, color = "blue")  +
    geom_line(color = "red", linetype = 3) 
- 
-####################################################################
-###################################################################
-######## create group 
- 
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip, color =LC_names)) 
+
+print(ppf) 
+#couleur des points et linges
+
+
+ P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = elevation, color =sp)) 
  P + geom_point(shape = 18, size = 3)  +
    geom_line(linetype = 3) 
+#différentes courbes des espèces
  
- 
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip, color = matrix_full_eco_elev_clim_sat$temp)) 
- print(P + geom_point(shape = 18, size = 3)  + geom_line(linetype = 1)) 
- 
- 
- ####################################################################
- ###################################################################
- ######## plot with factor
- 
- 
+#Ensuite, les différentes espèces en fonction seulement de la température
  P_fact <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = sp, y = temp)) 
  
  P_fact + geom_point(shape = 18, size = 3)
  
- P_fact +  geom_point(alpha = 0.1, size = 3) ### with transparency for overlap 
  
-
- ####################################################################
- ###################################################################
- ######## boxplot from factor
+#Boxplot
    
  P_fact <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = sp , y = temp)) 
  
  P_fact + geom_boxplot()
 
-   
-##### add point and  value
- 
+
  P_fact + geom_boxplot(varwidth = TRUE, outlier.shape = NA) + ### change boxplot width 
    geom_jitter(alpha = 0.2, size = 2, width = 0.1) + # add points and spread point 
    stat_summary(fun = mean, shape = 13, size = 1, colour = "darkgreen") # add mean 
@@ -105,115 +73,23 @@ labs(title    = "temperature vs. precipitation",
    stat_summary(fun = mean, shape = 13, size = 1, colour = "darkgreen") + # add mean 
    scale_fill_manual(values=cols)
  
+ #avec les données
  
- #### fill color boxplot 
+
  
  P_fact <- ggplot(data   = matrix_full_eco_elev_clim_sat,  aes(y = temp , fill = sp)) 
  
  P_fact + geom_boxplot() 
- 
- 
- #### control color
- 
- P_fact <- ggplot(data   = matrix_full_eco_elev_clim_sat,  aes(y = temp , fill = sp)) 
- 
- P_fact + geom_boxplot() + 
-   
-   scale_fill_manual(values= cols <-  c("darkgreen","darkred","darkblue","orange","brown","darkkhaki","darkslategrey") )
- 
 
+#couleur!
  
-
-   
- ####################################################################
- ###################################################################
- ######## lines and regression
- 
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip)) 
- P + geom_smooth()       
- 
-
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip)) 
- 
- P + geom_point(shape = 18, size = 3) +
-     geom_smooth()      
- 
- P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = precip, color =sp)) 
+#Lignes de régression
+  P <- ggplot(data   = matrix_full_eco_elev_clim_sat, mapping = aes(x = temp , y = elevation, color =sp)) 
  
  P + geom_point(shape = 18) + 
      geom_smooth(method = "lm", se = FALSE)
+ #lignes de régression des différentes espèces
  
- 
- 
- ####################################################################
- ###################################################################
- ######## histogram 
- 
- 
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +  ### frequency  
-   geom_histogram()
- 
+#Hitogramme des températures
  ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +  ### change breaks
    geom_histogram(bins=100)
-
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +  ### density
-   geom_histogram(aes(y=..density..), position="identity")
- 
- 
- ####################################################################
- ###################################################################
- ######## density
- 
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +  
-   geom_density(adjust = 1,alpha=0.5)
- 
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +
-   geom_density(adjust = 0.1)   ## smooth with adjust
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp)) +
-   geom_density(adjust = 3) ## smooth with adjust
- 
- 
-
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp,fill=factor(sp))) + ## add factor
-   geom_density(adjust = 3)
- 
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp,fill=factor(sp))) +  ## add factor
-   geom_density(adjust = 3,alpha=0.5)+ 
-   theme_classic()   ## change theme
- 
- 
- 
- ##### change group color  ### http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp,fill=factor(sp))) +
-   geom_density(adjust = 3,alpha=0.5)+
-   scale_fill_manual(values=c("darkgreen","darkred","darkblue","orange","brown","darkkhaki","darkslategrey"))+
-   theme_classic()
- 
- cols <-  c("darkgreen","darkred","darkblue","orange","brown","darkkhaki","darkslategrey") ## external color values
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp,fill=factor(sp))) +
-   geom_density(adjust = 3,alpha=0.5)+
-   scale_fill_manual(values=cols)+
-   theme_classic()
- 
- ##### mix histogram and denistiy 
- 
- cols <-  c("darkgreen","darkred","darkblue","orange","brown","darkkhaki","darkslategrey") 
- 
- ggplot(matrix_full_eco_elev_clim_sat, aes(x=temp,fill=factor(sp))) +
-   geom_density(adjust = 1,alpha=0.5)+
-   scale_fill_manual(values=cols)+
-   geom_histogram(aes(y=..density..), alpha=0.3, position="identity")+
-   theme_classic()
- 
- 
- 
- 
- 
- 
